@@ -1,13 +1,26 @@
 var WidgetMetadata = {
     id: "hanime1_me_style",
     title: "Hanime1",
-    description: "获取 Hanime1 动画，折扣码gold",
-    author: "gr294949",
+    description: "获取 Hanime1 动画",
+    author: "einmsr",
     site: "https://hanime1.me",
     version: "2.1.1",
     requiredVersion: "0.0.2",
     detailCacheDuration: 300,
     modules: [
+		{
+	        title: "分类：里番",
+	        description: "查看所有里番分类内容",
+	        functionName: "getHentaiList", // 指向我们要写的新函数
+	        params: [
+	            {
+	                name: "page",
+	                title: "页码",
+	                type: "page",
+	                value: "1"
+	            }
+	        ]
+	    }
         {
             title: "搜索影片",
             description: "搜索 Hanime1 影片内容",
@@ -318,6 +331,13 @@ async function searchVideos(params) {
     if (page > 1) url += `&page=${page}`;
 
     return fetchAndParse(url);
+}
+
+async function getHentaiList(params = {}) {
+    const page = params.page || 1;
+    let url = `${BASE_URL}/search?genre=${encodeURIComponent('里番')}`;
+	if (page > 1) url += `&page=${page}
+    return await fetchAndParse(url); 
 }
 
 async function loadDailyHot(params) {
