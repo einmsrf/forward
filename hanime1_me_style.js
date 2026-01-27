@@ -1,26 +1,13 @@
 var WidgetMetadata = {
     id: "hanime1_me_style",
     title: "Hanime1",
-    description: "获取 Hanime1 动画",
-    author: "einmsr",
+    description: "获取 Hanime1 动画，折扣码gold",
+    author: "gr294949",
     site: "https://hanime1.me",
     version: "2.1.1",
     requiredVersion: "0.0.2",
     detailCacheDuration: 300,
     modules: [
-		{
-	        title: "分类：里番",
-	        description: "查看所有里番分类内容",
-	        functionName: "getHentaiList", // 指向我们要写的新函数
-	        params: [
-	            {
-	                name: "page",
-	                title: "页码",
-	                type: "page",
-	                value: "1"
-	            }
-	        ]
-	    }
         {
             title: "搜索影片",
             description: "搜索 Hanime1 影片内容",
@@ -54,6 +41,14 @@ var WidgetMetadata = {
                 { name: "page", title: "页码", type: "page", description: "页码", value: "1" }
             ]
         },
+		{
+		    title: "里番",
+			description: "里番",
+			requiresWebView: false,
+		    functionName: "getHentaiList",
+			cacheDuration: 1800,
+		    params: [{ name: "page", title: "页码", type: "page", value: "1" }]
+		},
         {
             title: "本日热门",
             description: "本日热门影片",
@@ -201,17 +196,21 @@ async function fetchAndParse(url) {
             headers: getCommonHeaders()
         });
 
+        if (!response || !response.data) return [];
+
         const $ = Widget.html.load(response.data);
         const items = [];
+        const BASE_URL = "https://hanime1.me";
 
-        // 策略 1: 标签搜索页 (Tags Search) 结构
-        // .content-padding-new .search-doujin-videos -> a.overlay
+        // --- 策略 1: 标签搜索页 (Tags Search) 结构 ---
+        // 这种布局下，视频包裹在 .search-doujin-videos 类的容器里
         const $doujinVideos = $('.content-padding-new .search-doujin-videos');
         if ($doujinVideos.length > 0) {
             $doujinVideos.each((i, el) => {
                 const $card = $(el);
                 const $link = $card.find('a.overlay');
                 const href = $link.attr('href');
+
                 if (!href || href.indexOf('/watch?v=') === -1) return;
 
                 let link = href;
@@ -219,9 +218,10 @@ async function fetchAndParse(url) {
                     link = BASE_URL + (link.startsWith('/') ? '' : '/') + link;
                 }
 
+                // 避免重复项
                 if (items.some(it => it.link === link)) return;
 
-                // 图片提取
+                // 提取图片（处理背景图排除和懒加载）
                 let poster = "";
                 $card.find('img').each((j, imgEl) => {
                     const src = $(imgEl).attr('src') || $(imgEl).attr('data-src');
@@ -230,20 +230,19 @@ async function fetchAndParse(url) {
                         return false;
                     }
                 });
-                if (!poster) poster = $card.find('img').attr('src') || "";
 
                 if (poster && !poster.startsWith('http')) {
                     if (poster.startsWith('//')) poster = "https:" + poster;
                     else poster = BASE_URL + (poster.startsWith('/') ? '' : '/') + poster;
                 }
 
-                let title = $card.find('.card-mobile-title').text().trim() || $card.attr('title') || "";
+                const title = $card.find('.card-mobile-title').text().trim() || $card.attr('title') || "";
                 const duration = $card.find('.card-mobile-duration').first().text().trim();
                 const author = $card.find('.card-mobile-user').text().trim();
 
                 items.push({
                     id: link,
-                    type: "url",
+                    type: "url", // 对应 loadDetail
                     title: title,
                     posterPath: poster,
                     backdropPath: poster,
@@ -255,23 +254,22 @@ async function fetchAndParse(url) {
             });
         }
 
-        // 策略 2: 分类/排行 (Genre/Rank) 结构
-        // 直接是 <a> 包含 .home-rows-videos-div.search-videos
-        // 参考 Step 220 output: <a href="..."><div class="home-rows-videos-div search-videos">...</div></a>
-        // 有时候可能是 .home-rows-videos-div 下的 a
+        // --- 策略 2: 分类/排行/里番 (Genre/Rank) 结构 ---
+        // 应对你提供的：<a><div class="home-rows-videos-div search-videos">...</div></a>
         if (items.length === 0) {
             $('a').each((i, el) => {
                 const $a = $(el);
                 const href = $a.attr('href');
+                
+                // 仅处理包含视频 ID 的链接
                 if (!href || href.indexOf('/watch?v=') === -1) return;
 
-                // 必须包含视频卡片特征元素
+                // 核心判断：必须包含视频卡片的特征元素
                 const $videoDiv = $a.find('.home-rows-videos-div');
-                if ($videoDiv.length === 0 && !$a.parent().hasClass('home-rows-videos-div')) {
-                    // 也许是 <a> 里面直接有 img?
-                    // 让我们严格一点，只匹配包含 .home-rows-videos-title 或 .search-videos 的
-                    if ($a.find('.home-rows-videos-title').length === 0 && $a.find('.search-videos').length === 0) return;
-                }
+                const $searchTitle = $a.find('.home-rows-videos-title');
+                
+                // 排除无关链接：如果不是视频 div，也不是包含特定 title 类的 a，就跳过
+                if ($videoDiv.length === 0 && $searchTitle.length === 0) return;
 
                 let link = href;
                 if (!link.startsWith('http')) {
@@ -282,19 +280,14 @@ async function fetchAndParse(url) {
 
                 const $img = $a.find('img');
                 let poster = $img.attr('src') || $img.attr('data-src') || "";
+                
                 if (poster && !poster.startsWith('http')) {
                     if (poster.startsWith('//')) poster = "https:" + poster;
                     else poster = BASE_URL + (poster.startsWith('/') ? '' : '/') + poster;
                 }
 
-                let title = $a.find('.home-rows-videos-title').text().trim();
-                // 如果找不到标题，尝试找 img alt
-                if (!title) title = $img.attr('alt') || "";
-
-                // 时长通常在这个模式下不直接显示在卡片上，或者在图片右上角？
-                // 暂时留空或尝试查找
-                const duration = "";
-                const author = "";
+                // 提取标题
+                let title = $searchTitle.text().trim() || $img.attr('alt') || "";
 
                 if (title) {
                     items.push({
@@ -304,8 +297,8 @@ async function fetchAndParse(url) {
                         posterPath: poster,
                         backdropPath: poster,
                         mediaType: "movie",
-                        durationText: duration,
-                        description: author,
+                        durationText: "", // 策略2通常不带时长
+                        description: "",
                         link: link
                     });
                 }
@@ -333,11 +326,10 @@ async function searchVideos(params) {
     return fetchAndParse(url);
 }
 
-async function getHentaiList(params = {}) {
+async function getHentaiList(params) {
     const page = params.page || 1;
-    let url = `${BASE_URL}/search?genre=${encodeURIComponent('里番')}`;
-	if (page > 1) url += `&page=${page}
-    return await fetchAndParse(url); 
+    // 这里的 URL 就是你要求的里番搜索页面
+    return await fetchAndParse(`https://hanime1.me/search?genre=%E8%A3%8F%E7%95%AA&page=${page}`);
 }
 
 async function loadDailyHot(params) {
@@ -516,15 +508,6 @@ async function loadDetail(link) {
         if (!videoUrl) {
             videoUrl = $('video source').attr('src');
         }
-		
-		// 新策略：从网页脚本中匹配 m3u8 地址
-		if (!videoUrl) {
-			// 匹配包含 playlist.m3u8 的链接
-			const m3u8Match = response.data.match(/https?:\/\/[^'"]+\.m3u8[^'"]*/);
-			if (m3u8Match) {
-				videoUrl = m3u8Match[0];
-			}
-		}
 
         // 兜底对象 (模仿 MissAV 的错误处理逻辑)
         if (!videoUrl) {
