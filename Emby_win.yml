@@ -1,0 +1,23 @@
+# UpdateTime：2026-01-26 22:38:33
+# RuleCount：13
+payload:
+  - DOMAIN,emby.aca.best # ACA Emby
+  - DOMAIN,porn.aca.best # ACA Pron Emby
+  - DOMAIN,emby.pilipiliultra.com # PiliPili - CF路
+  - DOMAIN,cf.emby.ml # 垃圾影音 - CF线路
+  - DOMAIN,stream1.misakaf.org # MisakaF
+  - DOMAIN,stream2.misakaf.org # MisakaF
+  - DOMAIN,stream3.misakaf.org # MisakaF
+  - DOMAIN,stream4.misakaf.org # MisakaF
+  - DOMAIN,film.ohhhh.org # NMEmby
+  - DOMAIN,free.xmsl.org # 垃圾影音 - 中转线路
+  - DOMAIN,stream.ntrrr.top # SYN Emby
+  - DOMAIN,emby.pilipiliultra.top # PiliPili - 主线路
+  - DOMAIN,e01.811920.xyz # TDD Emby
+  - DOMAIN,tv.ash.yt #JMS机场服
+  - DOMAIN,ask.ash.yt #ASK机场服
+  - DOMAIN,ykk.emby.moe #ykk机场合作1111emby
+  - DOMAIN,link00.okemby.org #t.me/OkEmbyChat
+  - DOMAIN,v1.uhdnow.com #uhd CloudFlare Pro 优化线路，适合大部分播放场景
+  - DOMAIN,global.uhdnow.com #yhd 国际 CDN 线路，适合大部分播放场景
+  - DOMAIN,guaiguaiemby.83787.de #t.me/GUAIemby GUAIEmby公费追新硬盘高码服
