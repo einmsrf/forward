@@ -1,0 +1,70 @@
+{
+  "title": "𝓔𝓲𝓷𝓴𝓴𝓲 '𝓼 𝓦𝓲𝓭𝓰𝓮𝓽𝓼",
+  "description": "汇集瑟瑟网页的模块",
+  "icon": "https://github.com/einmsrf/forward/blob/main/Widgets/icon.png",
+  "widgets": [
+    {
+      "id": "Hanime1",
+      "title": "Hanime1",
+      "description": "获取 Hanime1 视频",
+      "requiredVersion": "0.0.2",
+      "version": "2.1.4",
+      "author": "einmsr",
+      "url": "https://raw.githubusercontent.com/einmsrf/forward/refs/heads/main/Widgets/Hanime1.js"
+    },
+    {
+      "id": "jable",
+      "title": "Jable",
+      "description": "获取Jable全站视频",
+      "requiredVersion": "0.0.1",
+      "version": "1.0.9",
+      "author": "nibiru",
+      "url": "https://raw.githubusercontent.com/einmsrf/forward/refs/heads/main/Widgets/jable.js"
+    },
+    {
+      "id": "Pornhub",
+      "title": "Pornhub",
+      "description": "在线观看Pornhub",
+      "requiredVersion": "0.0.1",
+      "version": "1.0.5",
+      "author": "海带",
+      "url": "https://raw.githubusercontent.com/einmsrf/forward/refs/heads/main/Widgets/pornhub.js"
+    },
+    {
+      "id": "ti.bemarkt.javday",
+      "title": "JAVDay",
+      "description": "获取 JAVDay 推荐",
+      "requiredVersion": "0.0.1",
+      "version": "1.1.0",
+      "author": "Ti",
+      "url": "https://raw.githubusercontent.com/einmsrf/forward/refs/heads/main/Widgets/javday.js"
+    },
+    {
+      "id": "ti.bemarkt.javrate",
+      "title": "JAVRate",
+      "description": "获取 JAVRate 推荐",
+      "requiredVersion": "0.0.1",
+      "version": "2.1.0",
+      "author": "Ti",
+      "url": "https://raw.githubusercontent.com/einmsrf/forward/refs/heads/main/Widgets/javrate.js"
+    },
+    {
+      "id": "unknow.baranwang.xvideos",
+      "title": "XVideos",
+      "description": "Xvideos",
+      "requiredVersion": "0.0.1",
+      "version": "0.9.4",
+      "author": "匿名",
+      "url": "https://raw.githubusercontent.com/einmsrf/forward/refs/heads/main/Widgets/XVideos.js"
+    },
+    {
+      "id": "MissAV",
+      "title": "MissAV",
+      "description": "获取 MissAV 推荐",
+      "requiredVersion": "0.0.2",
+      "version": "1.0.0",
+      "author": "𝓑𝓾𝓽𝓽𝓮𝓻𝓯𝓵𝔂",
+      "url": "https://raw.githubusercontent.com/einmsrf/forward/refs/heads/main/Widgets/MissAV.js"
+    }
+  ]
+}
