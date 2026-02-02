@@ -1,7 +1,7 @@
 {
   "title": "𝓔𝓲𝓷𝓴𝓴𝓲 '𝓼 𝓦𝓲𝓭𝓰𝓮𝓽𝓼",
   "description": "汇集瑟瑟网页的模块",
-  "icon": "https://github.com/einmsrf/forward/blob/main/Widgets/icon.png",
+  "icon": "https://raw.githubusercontent.com/einmsrf/forward/refs/heads/main/Widgets/icon.png",
   "widgets": [
     {
       "id": "Hanime1",
@@ -67,4 +67,5 @@
       "url": "https://raw.githubusercontent.com/einmsrf/forward/refs/heads/main/Widgets/MissAV.js"
     }
   ]
+
 }
