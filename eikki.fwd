@@ -1,7 +1,7 @@
 {
   "title": "𝓔𝓲𝓷𝓴𝓴𝓲 '𝓼 𝓦𝓲𝓭𝓰𝓮𝓽𝓼",
   "description": "汇集瑟瑟网页的模块",
-  "icon": "https://raw.githubusercontent.com/einmsrf/forward/refs/heads/main/Widgets/icon.png",
+  "icon": "https://github.com/einmsrf/forward/raw/main/Widgets/icon.png",
   "widgets": [
     {
       "id": "Hanime1",
@@ -56,16 +56,8 @@
       "version": "0.9.4",
       "author": "匿名",
       "url": "https://raw.githubusercontent.com/einmsrf/forward/refs/heads/main/Widgets/XVideos.js"
-    },
-    {
-      "id": "MissAV",
-      "title": "MissAV",
-      "description": "获取 MissAV 推荐",
-      "requiredVersion": "0.0.2",
-      "version": "1.0.0",
-      "author": "𝓑𝓾𝓽𝓽𝓮𝓻𝓯𝓵𝔂",
-      "url": "https://raw.githubusercontent.com/einmsrf/forward/refs/heads/main/Widgets/MissAV.js"
     }
   ]
 
 }
+
