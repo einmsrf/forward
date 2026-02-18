@@ -282,13 +282,19 @@ async function searchVideos(params) {
 async function getHentaiList(params) {
     const page = params.page || 1;
     // 这里的 URL 就是你要求的里番搜索页面
-    return await fetchAndParse(`https://hanime1.me/search?genre=%E8%A3%8F%E7%95%AA&page=${page}`);
+    //return await fetchAndParse(`https://hanime1.me/search?genre=%E8%A3%8F%E7%95%AA&page=${page}`);
+    let url = `${BASE_URL}/search?genre=${encodeURIComponent('裏番')}`;
+    if (page > 1) url += `&page=${page}`;
+    return fetchAndParse(url);
 }
 
 //本日排行
 async function loadDailyHot(params) {
     const page = params.page || 1;
-    return await fetchAndParse(`https://hanime1.me/search?sort=%E6%9C%AC%E6%97%A5%E6%8E%92%E8%A1%8C&page=${page}`);
+    //return await fetchAndParse(`https://hanime1.me/search?sort=%E6%9C%AC%E6%97%A5%E6%8E%92%E8%A1%8C&page=${page}`);
+    let url = `${BASE_URL}/search?sort=${encodeURIComponent('本日排行')}`;
+    if (page > 1) url += `&page=${page}`;
+    return fetchAndParse(url);
 }
 
 async function loadWeeklyHot(params) {
