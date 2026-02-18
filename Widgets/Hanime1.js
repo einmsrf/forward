@@ -4,7 +4,7 @@ var WidgetMetadata = {
     description: "获取 Hanime1 动画",
     author: "einmsr",
     site: "https://hanime1.me",
-    version: "2.1.4",
+    version: "2.1.7",
     requiredVersion: "0.0.2",
     detailCacheDuration: 300,
     modules: [
